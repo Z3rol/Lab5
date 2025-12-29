@@ -6,6 +6,7 @@ namespace Lab5
     {
         //Random
         private static readonly Random random = new Random();
+
         //Loops until a valid number is entered (returns the number)
         private static int ReadInputToInteger()
         {
@@ -19,6 +20,7 @@ namespace Lab5
                     Console.WriteLine("Invalid input. Please enter a valid number");
             }
         }
+
         //Loops until a positive number is entered
         static int GetPositiveInteger(string promptMessage)
         {
@@ -34,6 +36,7 @@ namespace Lab5
 
             return number;
         }
+
         //Generates a random array with the chosen size
         static int[] GenerateRandomArray(int count)
         {
@@ -46,6 +49,7 @@ namespace Lab5
 
             return array;
         }
+
         //Generates an array (The user enters each number in a differrent row)
         static int[] GenerateArrayFromDifferrentRows(int count)
         {
@@ -58,6 +62,7 @@ namespace Lab5
 
             return array;
         }
+
         //Generates an array (The user eneters all the numbers in one line space-split)
         static int[]? GenerateArrayInOneRow()
         {
@@ -86,6 +91,7 @@ namespace Lab5
 
             return validNumbers.ToArray();
         }
+
         //Finds the last entrance of the minimum number
         //And calculates sum of all the elements before it
         static int SumOfNumebrsBeforeLastMinNumber(int[] array)
@@ -110,6 +116,7 @@ namespace Lab5
             
             return sum;
         }
+
         //Main
         static void Main(string[] args)
         {
@@ -177,7 +184,6 @@ namespace Lab5
             }
 
             //Output the result
-            Console.WriteLine("Calculating...");
             Console.WriteLine("Generated array: ");
             Console.WriteLine(string.Join(" ", finalArray));
             Console.WriteLine($"The sum of the numbers before the minimum is: {SumOfNumebrsBeforeLastMinNumber(finalArray)}");
