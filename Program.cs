@@ -10,7 +10,7 @@ namespace Lab5
         //Loops until a valid number is entered (returns the number)
         private static int ReadInputToInteger()
         {
-            while (true)
+            do
             {
                 string? input = Console.ReadLine();
 
@@ -18,7 +18,7 @@ namespace Lab5
                     return number;
                 else
                     Console.WriteLine("Invalid input. Please enter a valid number");
-            }
+            } while (true);
         }
 
         //Loops until a positive number is entered
@@ -66,55 +66,51 @@ namespace Lab5
         //Generates an array (The user eneters all the numbers in one line space-split)
         static int[]? GenerateArrayInOneRow()
         {
-            string[] inputElements = Console.ReadLine().Split();
-            List<int> validNumbers = new List<int>();
+            string? rawInput = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(rawInput)) return null;
 
-            foreach (string element in inputElements)
+            string[] inputElements = rawInput.Split([' '], StringSplitOptions.RemoveEmptyEntries);
+            
+            int[] result = new int[inputElements.Length];
+
+            for (int i = 0; i < inputElements.Length; i++)
             {
-                if (string.IsNullOrWhiteSpace(element))
-                    continue;
-
-                if (int.TryParse(element, out int number))
-                    validNumbers.Add(number);
+                if (int.TryParse(inputElements[i], out int number))
+                {
+                    result[i] = number;
+                }
                 else
                 {
-                    Console.WriteLine($"Element {element} is not a valid number");
+                    Console.WriteLine($"Element '{inputElements[i]}' is not a valid number");
                     return null;
                 }
             }
 
-            if (validNumbers.Count == 0)
-            {
-                Console.WriteLine("No valid numbers were entered");
-                return null;
-            }
-
-            return validNumbers.ToArray();
+            return result;
         }
 
         //Finds the last entrance of the minimum number
         //And calculates sum of all the elements before it
-        static int SumOfNumebrsBeforeLastMinNumber(int[] array)
+        // Исправляем расчет суммы и поиск индекса за ОДИН проход
+        static long SumOfNumbersBeforeLastMin(int[] array)
         {
-            if (array.Length == 0) return -1;
+            if (array == null || array.Length == 0) return 0;
 
             int minNumber = array[0];
-            int minLastIndex = -1;
+            long currentSum = 0;
+            long sumAtMin = 0;
 
             for (int i = 0; i < array.Length; i++)
             {
                 if (array[i] <= minNumber)
                 {
                     minNumber = array[i];
-                    minLastIndex = i;
+                    sumAtMin = currentSum;
                 }
+                currentSum += array[i];
             }
 
-            int sum = 0;
-
-            for (int i = 0; i < minLastIndex; i++) sum += array[i];
-            
-            return sum;
+            return sumAtMin;
         }
 
         //Main
@@ -183,10 +179,10 @@ namespace Lab5
                 }
             }
 
-            //Output the result
+            //Output the resul
             Console.WriteLine("Generated array: ");
             Console.WriteLine(string.Join(" ", finalArray));
-            Console.WriteLine($"The sum of the numbers before the minimum is: {SumOfNumebrsBeforeLastMinNumber(finalArray)}");
+            Console.WriteLine($"The sum of the numbers before the minimum is: {SumOfNumbersBeforeLastMin(finalArray)}");
         }
     }
 }
